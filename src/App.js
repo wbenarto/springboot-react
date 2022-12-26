@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import {getAllStudents} from './client.js'
+import {useState, useEffect} from 'react'
 
 function App() {
+    const [data, setData] = useState([])
+    useEffect(()=>{
+        const fetchData = getAllStudents().then(res=>res.json()).then(data => setData(data))
+        console.log(data)
+
+    }, [])
+
+    console.log( "data on app here")
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      {data.map((e,i) => (
+      <>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+            {e.name}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </>
+      ))}
     </div>
   );
 }
